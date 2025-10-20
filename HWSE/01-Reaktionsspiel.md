@@ -45,7 +45,7 @@ Da wir die Hardware-Grundlagen bereits behandelt haben, hier eine kurze Wiederho
 
 | Komponente | GPIO Pin | Beschreibung |
 |------------|----------|--------------|
-| LED | GPIO 2 | Signallicht (mit 220Ω Widerstand) |
+| LED | GPIO 2 | Signallicht (mit Voriderstand) |
 | Button | GPIO 0 | Start/Reaktions-Eingabe (mit Pull-up) |
 | Buzzer | GPIO 4 | Audio-Feedback |
 
@@ -152,7 +152,7 @@ Basierend auf der Aufgabenstellung hat unser Spiel vier Zustände:
 ```
 [START] → [WAITING] → [READY] → [GO] → [RESULT] → [WAITING]
              ↑                              ↓
-             └──────── (zurück zum Start) ───┘
+             └─────── (zurück zum Start) ───┘
 ```
 
 ## 🔍 Erweiterte Überlegungen
@@ -180,19 +180,7 @@ Beantworte diese Fragen mit deinem Diagramm:
 
 ## 📋 Arbeitsblatt
 
-Zeichne dein Zustandsdiagramm hier (auf Papier oder digital):
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                                                             │
-│  Platz für dein Zustandsdiagramm                           │
-│                                                             │
-│  Tipp: Verwende Kreise für Zustände und Pfeile für         │
-│        Übergänge. Beschrifte die Pfeile mit den           │
-│        Bedingungen für den Übergang.                       │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+Zeichne dein Zustandsdiagramm hier (auf Papier oder digital).
 
 ## ✅ Überprüfung
 
@@ -240,24 +228,25 @@ led_pwm.duty(512)       # 50% Helligkeit (0-1023)
 
 ### 2. `utime` vs `time` - Wichtiger Unterschied!
 
-**Warum `utime` statt `time`?**
+**Unterschied zwischen `time` und `utime`:**
 
 ```python
 # time - Standard Python (auch in MicroPython verfügbar)
 import time
-time.sleep(1)  # Blockiert 1 Sekunde - PROBLEMATISCH für Embedded!
+start = time.ticks_ms()  # Standard Python Timing
+elapsed = time.ticks_diff(time.ticks_ms(), start)
 
-# utime - MicroPython optimiert für Microcontroller
+# utime - MicroPython spezifisch
 import utime
-start = utime.ticks_ms()  # Millisekunden-Zeitstempel
-# ... andere Arbeit ...
-elapsed = utime.ticks_diff(utime.ticks_ms(), start)  # Non-blocking!
+start = utime.ticks_ms()  # MicroPython Timing
+elapsed = utime.ticks_diff(utime.ticks_ms(), start)
 ```
 
-**Warum `utime` besser ist:**
-- **Non-blocking**: Programm kann währenddessen andere Dinge tun
-- **Präziser**: Millisekunden-Genauigkeit
-- **Embedded-optimiert**: Für Microcontroller entwickelt
+**Unterschiede:**
+- **`time`**: Standard Python-Modul, auch in MicroPython verfügbar
+- **`utime`**: MicroPython-spezifisches Modul für Embedded Systems
+- **Funktionalität**: Beide bieten ähnliche Timing-Funktionen
+- **Verwendung**: `utime` ist in MicroPython-Tutorials üblicher
 
 ### 3. Non-blocking Timer implementieren
 
@@ -373,6 +362,8 @@ beep(600, 500)   # Langer, tiefer Ton
 ```
 
 ## 🔄 Zustandsautomat - Funktionaler Ansatz
+
+Die Zustandsmaschine ist **funktional** aufgebaut: Jeder Zustand hat seine eigene Update-Funktion (`update_waiting()`, `update_ready()`, etc.), die in der Hauptschleife aufgerufen wird. Dies macht den Code übersichtlich und leicht erweiterbar.
 
 ```python
 import utime
@@ -512,25 +503,20 @@ Jetzt bauen wir unser Reaktionsspiel Schritt für Schritt auf. Wir beginnen mit 
 
 ## Hinweis: `utime` vs `time`
 
-In unseren Programmen verwenden wir **`utime`** statt `time`:
+**Beide Module haben ähnliche Funktionen:**
 
 ```python
-# SCHLECHT für Mikrocontroller:
-import time
-time.sleep(3)  # Blockiert das gesamte System für 3 Sekunden!
+import time   # Standard Python-Modul
+import utime  # MicroPython-spezifisch
 
-# GUT für Mikrocontroller:
-import utime
-start = utime.ticks_ms()
-# ... anderer Code kann laufen ...
-if utime.ticks_diff(utime.ticks_ms(), start) >= 3000:
-    print("3 Sekunden vergangen!")
+# Beide funktionieren in MicroPython:
+start_time = time.ticks_ms()    # Standard Python
+start_utime = utime.ticks_ms()  # MicroPython-spezifisch
 ```
 
-**Warum `utime`?**
-- **Non-blocking**: Andere Teile des Programms können weiterlaufen
-- **Präziser**: Millisekunden-Genauigkeit
-- **Embedded-optimiert**: Speziell für Mikrocontroller entwickelt
+**Unterschied:**
+- **`time`**: Standard Python-Modul, auch in MicroPython verfügbar
+- **`utime`**: MicroPython-spezifisches Timing-Modul
 
 ---
 
@@ -1174,7 +1160,6 @@ def debug_button():
 ```
 
 **Mögliche Ursachen:**
-- Pull-up Widerstand fehlt oder falsch
 - Button-Pins vertauscht
 - Mechanischer Defekt des Buttons
 - Interferenz durch andere Signale
