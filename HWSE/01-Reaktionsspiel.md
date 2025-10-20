@@ -1,6 +1,6 @@
 # Reaktionsspiel mit ESP32 und MicroPython
 
-Willkommen zum Tutorial! In dieser Online-Lesson entwickelst du Schritt für Schritt ein Reaktionsspiel mit dem ESP32 Microcontroller und MicroPython.
+Willkommen zum Online Tutorium! In diesem Online-Tutorial entwickelst du Schritt für Schritt ein Reaktionsspiel mit dem ESP32 Microcontroller und MicroPython.
 
 ## 🎯 Was du lernen wirst
 
@@ -52,7 +52,7 @@ Da wir die Hardware-Grundlagen bereits behandelt haben, hier eine kurze Wiederho
 ## 🔌 Schaltplan (Kurzfassung)
 
 ```
-LED:    GPIO 2 → 220Ω → LED(+) → LED(-) → GND
+LED:    GPIO 2 → Vorwiderstand → LED(+) → LED(-) → GND
 Button: GPIO 0 → Button → GND (+ Pull-up zu 3.3V)
 Buzzer: GPIO 4 → Buzzer(+) → Buzzer(-) → GND
 ```
@@ -607,6 +607,8 @@ def update_led():
 ---
 
 ## Schritt 3: Button-Handling
+
+💡 **Hinweis**: Wir verwenden **Polling** (Button-Abfrage in der Hauptschleife) statt Interrupts. Das macht den Code einfacher zu verstehen und zu debuggen - ideal für Lernzwecke.
 
 Jetzt implementieren wir ordentliche Button-Entprellung (einfache Variante).
 
