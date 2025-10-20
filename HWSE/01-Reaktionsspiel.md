@@ -209,11 +209,11 @@ Hast du dein Zustandsdiagramm erstellt? Dann geht es weiter mit den [MicroPython
 
 In diesem Abschnitt lernst du die wichtigsten MicroPython-Konzepte für unser Reaktionsspiel.
 
-## 🐍 MicroPython auf ESP32
+## MicroPython auf ESP32
 
 MicroPython ist eine schlanke Python-Implementation für Microcontroller. Der ESP32 unterstützt die meisten Python-Features, die wir brauchen.
 
-## 📚 Wichtige Module für unser Projekt
+## Wichtige Module für unser Projekt
 
 ### 1. `machine` - Hardware-Steuerung
 
@@ -240,7 +240,7 @@ led_pwm.duty(512)       # 50% Helligkeit (0-1023)
 
 ### 2. `utime` vs `time` - Wichtiger Unterschied!
 
-⚠️ **Warum `utime` statt `time`?**
+**Warum `utime` statt `time`?**
 
 ```python
 # time - Standard Python (auch in MicroPython verfügbar)
@@ -510,7 +510,7 @@ Jetzt bauen wir unser Reaktionsspiel Schritt für Schritt auf. Wir beginnen mit 
 5. **[Schritt 5: Buzzer-Integration](#schritt-5-buzzer-integration)** - Audio-Feedback hinzufügen
 6. **[Schritt 6: Vollständiges Spiel](#schritt-6-vollständiges-spiel)** - Alles zusammenfügen
 
-## ⚠️ Wichtiger Hinweis: `utime` vs `time`
+## Hinweis: `utime` vs `time`
 
 In unseren Programmen verwenden wir **`utime`** statt `time`:
 
@@ -538,7 +538,7 @@ if utime.ticks_diff(utime.ticks_ms(), start) >= 3000:
 
 Wir starten mit einem minimalen Zustandsautomaten.
 
-### 📄 Code: [step1_basic_states.py](step1_basic_states.py)
+### Code: [step1_basic_states.py](step1_basic_states.py)
 
 **Neue Struktur:**
 ```python
@@ -582,7 +582,7 @@ def update_waiting():
 
 Wir verbessern die LED-Steuerung mit PWM für sanftes Pulsieren.
 
-### 📄 Code: [step2_led_control.py](step2_led_control.py)
+### Code: [step2_led_control.py](step2_led_control.py)
 
 **Wichtige Änderungen:**
 ```python
@@ -624,7 +624,7 @@ def update_led():
 
 Jetzt implementieren wir ordentliche Button-Entprellung (einfache Variante).
 
-### 📄 Code: [step3_button_debounce.py](step3_button_debounce.py)
+### Code: [step3_button_debounce.py](step3_button_debounce.py)
 
 **Einfache Entprellung:**
 ```python
@@ -702,7 +702,7 @@ def change_state_to_ready():
 
 Audio-Feedback für bessere Benutzererfahrung.
 
-### 📄 Code: [step5_buzzer_audio.py](step5_buzzer_audio.py)
+### Code: [step5_buzzer_audio.py](step5_buzzer_audio.py)
 
 **Einfache Buzzer-Steuerung:**
 ```python
@@ -736,7 +736,7 @@ def update_buzzer():
 
 Die finale Version mit allen Features!
 
-### 📄 Code: [step6_complete_game.py](step6_complete_game.py)
+### Code: [step6_complete_game.py](step6_complete_game.py)
 
 Diese Datei enthält die vollständige Implementation mit:
 - ✅ Allen vier Zuständen
