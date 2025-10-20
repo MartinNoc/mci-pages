@@ -608,7 +608,7 @@ def update_led():
 
 ## Schritt 3: Button-Handling
 
-💡 **Hinweis**: Wir verwenden **Polling** (Button-Abfrage in der Hauptschleife) statt Interrupts. Das macht den Code einfacher zu verstehen und zu debuggen - ideal für Lernzwecke.
+💡 **Hinweis**: Wir verwenden **Polling** (Button-Abfrage in der Hauptschleife) statt Interrupts. Das macht den Code einfacher zu verstehen und zu debuggen.
 
 Jetzt implementieren wir ordentliche Button-Entprellung (einfache Variante).
 
