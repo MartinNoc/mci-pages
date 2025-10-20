@@ -1,0 +1,42 @@
+Ziel der Aufgabe
+
+In dieser Aufgabe entwickeln Ihr ein Reaktionsspiel in MicroPython, das über LEDs, einen Button und einen Buzzer anzeigt, wie schnell ein:e Spieler:in auf ein Signal reagiert.
+
+Tabelle für Hardware Komponenten:
+| Komponente                 | Beschreibung                          |
+| -------------------------- | ------------------------------------- |
+| LED (oder RGB-LED)         | Signallicht                           |
+| Button                     | Start / Reaktion                      |
+| Buzzer (aktiv oder passiv) | Akustisches Feedback                  |
+| Microcontroller            | ESP32, Raspberry Pi Pico oder ähnlich |
+
+Abläufe und Zustände: 
+| Zustand     | LED-Verhalten              | Buzzer        | Beschreibung                                                  |
+| ----------- | -------------------------- | ------------- | ------------------------------------------------------------- |
+| WAITING | LED aus                    | aus           | Spiel bereit, wartet auf Start                                |
+| READY   | LED pulsiert langsam (PWM) | 1 kurzer Beep | Zufällige Wartezeit (2–5 s)                                   |
+| GO      | LED leuchtet hell          | 3 kurze Beeps | Spieler soll so schnell wie möglich drücken                   |
+| RESULT  | LED blinkt                 | 1 langer Beep | Zeigt Reaktionszeit oder Timeout an, danach zurück zu WAITING |
+Hieraus sollen sie dann ein Zustands diagagram zeichnen und wir geben ihnen die Lösung dann zum checken: 
+
+Aufgabenbeschreibung
+Zustandsautomat implementieren
+Definieren Sie die Zustände WAITING, READY, GO, RESULT.
+Steuern Sie den Ablauf über Zeitbedingungen (utime.ticks_ms()).
+
+Timer & Zufallszeit
+ 
+Verwenden Sie utime.ticks_ms() für Zeitmessung (nicht sleep()).
+Erzeugen Sie die zufällige Startverzögerung mit urandom.
+
+LED-Steuerung
+Nutzen Sie PWM für sanftes Pulsieren (READY-Phase).
+In der GO-Phase leuchtet die LED konstant hell.
+
+Button-Eingabe
+Entprellen Sie den Button per Zeitprüfung (DEBOUNCE_MS).
+Beim Drücken während der GO-Phase messen Sie die Reaktionszeit.
+
+Buzzer-Ausgabe
+Spielen Sie kurze Beeps in READY und GO.
+Geben Sie einen längeren Ton beim Ergebnis aus.
