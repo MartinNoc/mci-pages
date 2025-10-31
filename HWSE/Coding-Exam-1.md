@@ -70,7 +70,7 @@ da es sich während des Programmierens **weiterentwickelt** und man somit die M�
 
 Für die Minimal Anforderung wäre das:
 
-![Min_ablauf](1_coding_exam_min.png)
+![Min_ablauf](01_coding_exam_min.png)
 
 Wenn alle Zusatzaufgaben erfüllt werden dann haben wir folgendes Ablaufdiagram
 
