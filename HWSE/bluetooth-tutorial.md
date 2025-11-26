@@ -2,7 +2,7 @@
 
 ## 🎯 Projektübersicht
 
-In diesem Assignment entwickelst du ein intelligentes Lichtsystem mit folgenden Funktionen:
+In diesem Assignment entwickelst ihr ein intelligentes Lichtsystem mit folgenden Funktionen:
 
 - **Umgebungslichtsensor (LDR)**: Misst die aktuelle Helligkeit
 - **Intelligente LED-Steuerung**: LEDs werden bei Dunkelheit heller, bei Helligkeit dunkler
@@ -99,7 +99,7 @@ def set_pwm_brightness(pwm_obj, brightness):
 ```
 
 **🎯 Deine Aufgabe**: 
-- Begrenze `brightness` auf 0.0-1.0
+- `brightness` sollte auf 0.0-1.0 gemapped werden (0 - 4095 auf 0.0 - 1.0)
 - Konvertiere zu PWM-Duty-Cycle
 - Verwende `duty_u16()` für 16-Bit PWM oder `duty()` für 10-Bit
 
@@ -107,7 +107,7 @@ def set_pwm_brightness(pwm_obj, brightness):
 
 ```python
 def control_single_led(brightness):
-    # Steuert die einzelne LED
+    # Steuert die einzelne LED(Helligkeit anpassen)
     pass
 ```
 
