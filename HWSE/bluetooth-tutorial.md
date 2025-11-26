@@ -2,7 +2,7 @@
 
 ## 🎯 Projektübersicht
 
-In diesem Assignment entwickelst ihr ein intelligentes Lichtsystem mit folgenden Funktionen:
+In diesem Assignment entwickelt ihr ein intelligentes Lichtsystem mit folgenden Funktionen:
 
 - **Umgebungslichtsensor (LDR)**: Misst die aktuelle Helligkeit
 - **Intelligente LED-Steuerung**: LEDs werden bei Dunkelheit heller, bei Helligkeit dunkler
@@ -15,8 +15,8 @@ In diesem Assignment entwickelst ihr ein intelligentes Lichtsystem mit folgenden
 ### Benötigte Komponenten
 - ESP32 Entwicklungsboard
 - 1x LDR (Fotowiderstand) + 10kΩ Widerstand
-- 1x LED + 220Ω Widerstand (für Single-LED Modus)
-- 6x LEDs + 220Ω Widerstände (für Bargraph-Modus)
+- 1x LED + Widerstand (für Single-LED Modus)
+- 6x LEDs + Widerstände (für Bargraph-Modus)
 - Breadboard und Verbindungskabel
 
 ### Pin-Belegung (Empfehlung)
@@ -26,7 +26,7 @@ Einzel-LED:  GPIO 23
 Bargraph:    GPIO 14, 27, 26, 32, 21, 22
 ```
 
-## 🔧 Schritt 1: Projekt Setup und Konfiguration
+## Schritt 1: Projekt Setup und Konfiguration
 
 ### Grundlegende Imports und Konstanten
 
@@ -61,7 +61,7 @@ STAT_INTERVAL = 2000    # BLE-Status alle 2 Sekunden
 USE_BARGRAPH = True     # Bargraph oder Einzel-LED
 ```
 
-## 🔧 Schritt 2: Hardware initialisieren
+## Schritt 2: Hardware initialisieren
 
 ### ADC für LDR konfigurieren
 
@@ -82,9 +82,9 @@ single_led = PWM(Pin(PIN_LED), freq=PWM_FREQ)
 bargraph_leds = [PWM(Pin(pin), freq=PWM_FREQ) for pin in BAR_PINS]
 ```
 
-**💡 Tipp**: Teste zuerst jeden LED-Pin einzeln, um sicherzustellen, dass die Verkabelung korrekt ist. Das kann mittels led.on() oder direkt über die PWM gemacht werden. 
+**Tipp**: Teste zuerst jeden LED-Pin einzeln, um sicherzustellen, dass die Verkabelung korrekt ist. Das kann mittels led.on() oder direkt über die PWM gemacht werden. 
 
-## 🔧 Schritt 3: PWM-Steuerfunktionen
+## Schritt 3: PWM-Steuerfunktionen
 
 ### PWM-Wert setzen (0.0-1.0)
 
@@ -98,7 +98,7 @@ def set_pwm_brightness(pwm_obj, brightness):
     pass
 ```
 
-**🎯 Deine Aufgabe**: 
+**Deine Aufgabe**: 
 - Mapping programmieren das `brightness` zwischen 0.0 und 1.0 ist. (Max-Value == 1.0)
 - Konvertiere zu PWM-Duty-Cycle
 - Verwende `duty_u16()` für 16-Bit PWM oder `duty()` für 10-Bit
@@ -122,7 +122,7 @@ def control_bargraph(brightness):
     pass
 ```
 
-**🎯 Deine Aufgabe**: 
+**Deine Aufgabe**: 
 - Multipliziere `brightness` mit der Anzahl LEDs
 - Verwende `enumerate()` um über LED-Index zu iterieren
 - Jede LED bekommt einen Anteil der Gesamthelligkeit
@@ -156,9 +156,9 @@ def apply_ema_filter(new_value, alpha=EMA_ALPHA):
     pass
 ```
 
-**💡 Tipp**: Ein niedriger Alpha-Wert (0.1-0.2) macht das System sehr sanft, höhere Werte (0.5+) reagieren schneller (gerne experimentel ausprobieren).
+**Tipp**: Ein niedriger Alpha-Wert (0.1-0.2) macht das System sehr sanft, höhere Werte (0.5+) reagieren schneller (gerne experimentel ausprobieren).
 
-## 🔧 Schritt 5: BLE-Kommunikation implementieren
+## Schritt 5: BLE-Kommunikation implementieren
 
 ### BLE-Klasse Grundstruktur
 
@@ -197,7 +197,7 @@ UART_TX_UUID = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"  # ESP32 → App
 UART_RX_UUID = "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"  # App → ESP32
 ```
 
-**🎯 Deine Aufgabe**: 
+**Deine Aufgabe**: 
 - Registriere den UART-Service mit TX (notify) und RX (write) Characteristics
 - Implementiere Event-Handler für Verbindungen und Datenempfang
 
@@ -210,7 +210,7 @@ def handle_incoming_command(self, message):
     pass
 ```
 
-## 🔧 Schritt 6: Intelligente Lichtsteuerung
+## Schritt 6: Intelligente Lichtsteuerung
 
 ### Mapping-Logik: Umgebungslicht zu LED-Helligkeit
 
@@ -222,7 +222,7 @@ def calculate_led_brightness(ldr_normalized):
     pass
 ```
 
-**💡 Tipp**: Die einfachste Implementierung ist `led_brightness = 1.0 - ldr_normalized`
+**Tipp**: Die einfachste Implementierung ist `led_brightness = 1.0 - ldr_normalized`
 
 ### Override-Modus für manuelle Steuerung
 
@@ -237,7 +237,7 @@ def get_current_brightness(ldr_value):
     pass
 ```
 
-## 🔧 Schritt 7: Hauptprogramm-Schleife
+## Schritt 7: Hauptprogramm-Schleife
 
 ### Timing-Management
 
@@ -284,7 +284,7 @@ while True:
     # Kleine Pause
 ```
 
-## 🔧 Schritt 8: Testing und Kalibrierung
+## Schritt 8: Testing und Kalibrierung
 
 ### LDR-Kalibrierung
 
@@ -314,7 +314,7 @@ def test_leds():
 4. **UART RX**: Nachrichten an ESP32 senden
 5. **UART TX**: Status-Nachrichten von ESP32 empfangen
 
-## 📊 Status-Nachrichten Format
+## Status-Nachrichten Format
 
 ### Empfohlenes Format
 
@@ -333,7 +333,7 @@ INFO:Kalibrierung gestartet
 ERROR:ADC-Fehler
 ```
 
-## 🐛 Debugging-Tipps
+## Debugging-Tipps
 
 ### Print-Debugging
 
@@ -368,7 +368,7 @@ if DEBUG_ADC:
 - EMA_ALPHA verringern (z.B. auf 0.1)
 - Hauptschleife-Delay erhöhen
 
-## 🚀 Mögliche Erweiterungen (Freiwillig)
+## Mögliche Erweiterungen (Freiwillig)
 
 ### Mehrere LEDs parallel dimmen
 
