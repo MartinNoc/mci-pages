@@ -2,7 +2,7 @@
 
 ## 🎯 Projektübersicht
 
-In diesem Assignment entwickelst du ein intelligentes Lichtsystem mit folgenden Funktionen:
+In diesem Assignment entwickelst ihr ein intelligentes Lichtsystem mit folgenden Funktionen:
 
 - **Umgebungslichtsensor (LDR)**: Misst die aktuelle Helligkeit
 - **Intelligente LED-Steuerung**: LEDs werden bei Dunkelheit heller, bei Helligkeit dunkler
@@ -52,8 +52,8 @@ BAR_PINS = [14, 27, 26, 32, 21, 22]
 PWM_FREQ = 1000
 
 # LDR-Kalibrierung (experimentell bestimmen!)
-ADC_MIN = 200    # Dunkelster gemessener Wert
-ADC_MAX = 3500   # Hellster gemessener Wert
+ADC_MIN = 200    # Dunkelster gemessener Wert - Selber bitte bestimmen
+ADC_MAX = 3500   # Hellster gemessener Wert - Selber bitte bestimmen
 
 # Verhalten
 EMA_ALPHA = 0.2         # Glättungsfaktor (0.1-0.3 empfohlen)
@@ -67,7 +67,7 @@ USE_BARGRAPH = True     # Bargraph oder Einzel-LED
 
 ```python
 # LDR Setup
-adc = ADC(Pin(PIN_LDR))
+adc = ADC(Pin(PIN_LDR))     # ADC intialisieren
 adc.atten(ADC.ATTN_11DB)    # 0-3.3V Messbereich
 adc.width(ADC.WIDTH_12BIT)  # 12-Bit Auflösung (0-4095)
 ```
@@ -82,7 +82,7 @@ single_led = PWM(Pin(PIN_LED), freq=PWM_FREQ)
 bargraph_leds = [PWM(Pin(pin), freq=PWM_FREQ) for pin in BAR_PINS]
 ```
 
-**💡 Tipp**: Teste zuerst jeden LED-Pin einzeln, um sicherzustellen, dass die Verkabelung korrekt ist.
+**💡 Tipp**: Teste zuerst jeden LED-Pin einzeln, um sicherzustellen, dass die Verkabelung korrekt ist. Das kann mittels led.on() oder direkt über die PWM gemacht werden. 
 
 ## 🔧 Schritt 3: PWM-Steuerfunktionen
 
@@ -99,7 +99,7 @@ def set_pwm_brightness(pwm_obj, brightness):
 ```
 
 **🎯 Deine Aufgabe**: 
-- Begrenze `brightness` auf 0.0-1.0
+- Mapping programmieren das `brightness` zwischen 0.0 und 1.0 ist. (Max-Value == 1.0)
 - Konvertiere zu PWM-Duty-Cycle
 - Verwende `duty_u16()` für 16-Bit PWM oder `duty()` für 10-Bit
 
@@ -140,7 +140,7 @@ def read_ldr_normalized():
     pass
 ```
 
-### EMA-Filter für Glättung
+### EMA-Filter (oder ähnliches) für die Glättung
 
 Implementiere einen Exponential Moving Average Filter:
 
@@ -156,7 +156,7 @@ def apply_ema_filter(new_value, alpha=EMA_ALPHA):
     pass
 ```
 
-**💡 Tipp**: Ein niedriger Alpha-Wert (0.1-0.2) macht das System sehr sanft, höhere Werte (0.5+) reagieren schneller.
+**💡 Tipp**: Ein niedriger Alpha-Wert (0.1-0.2) macht das System sehr sanft, höhere Werte (0.5+) reagieren schneller (gerne experimentel ausprobieren).
 
 ## 🔧 Schritt 5: BLE-Kommunikation implementieren
 
@@ -191,8 +191,8 @@ class SmartLightBLE:
 Verwende den Standard Nordic UART Service:
 
 ```python
-# Standard UART Service UUIDs
-UART_SERVICE_UUID = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
+# Standard UART Service UUIDs Nordic UART Service
+UART_SERVICE_UUID = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E" # 
 UART_TX_UUID = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"  # ESP32 → App
 UART_RX_UUID = "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"  # App → ESP32
 ```
